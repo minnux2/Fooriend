@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="accountMapper">
+ <!--  회원가입-->
+ 	<insert id="register"  parameterType="be.good.model.MemberDTO">
+		insert into member(mno, mname, maddress, memail, mid, mpassword, mphone, mallergy, point)
+		values (mnoseq.nextval, #{mname}, #{maddress},#{memail}, #{mid}, #{mpassword}, #{mphone}, #{mallergy} ,0)
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id = "login" resultType = "be.good.model.MemberDTO" parameterType="be.good.model.MemberDTO">
+		select mno, mid, mpassword, mphone, memail, mname from member where mid = #{mid} and mpassword = #{mpassword}
+	</select>
+	
+	<!-- 아이디찾기 -->
+	<select id = "memberIdSearch" parameterType="be.good.model.MemberDTO" resultType = "be.good.model.MemberDTO">
+		select mid from member where mname = #{mname} and memail = #{memail}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id = "memberPwdCheck" parameterType = "be.good.model.MemberDTO" resultType = "be.good.model.MemberDTO">
+		select mpassword from member where mname = #{mname} and memail = #{memail} and mid = #{mid}
+	</select>
+	
+ 	<!-- 회원가입 아이디 중복체크 -->
+	<select id = "idCheck" resultType = "be.good.model.MemberDTO" parameterType = "be.good.model.MemberDTO">
+		select * from member where mid = #{mid}
+	</select>
+	
+	<!-- 회원정보 조회 -->
+	<select id = "readMember" resultType = "be.good.model.MemberDTO">
+		select * from member where mid = #{mid}
+	</select>
+	
+	<!-- 회원정보 수정 -->
+	<update id = "memberUpdate" parameterType = "be.good.model.MemberDTO">
+		update member set mphone = #{mphone}, mid = #{mid},memail = #{memail}, mname = #{mname} , mpassword = #{mpassword} where mid = #{mid}
+	</update>
+	
+	<!-- 회원탈퇴 -->
+	<delete id = "memberDelete" parameterType = "be.good.model.MemberDTO">
+		delete from member where mid = #{mid} and mpassword = #{mpassword}
+	</delete>
+	
+	<delete id = "memDel" parameterType = "be.good.model.MemberDTO">
+		delete from member where mid = #{mid}
+	</delete>
+	
+	<!-- mno 불러오기-->
+	<select id = "searchmno"  resultType = "String" parameterType = "be.good.model.MemberDTO">
+		select mno from member where mid= #{mid}
+	</select>
+	<!-- 포인트조회 -->
+	<select id = "selectpoint"  resultType = "int" parameterType ="int">
+		select point from member where mno= #{mno}
+	</select>
+	<!-- 포인트조회 2-->
+	<select id = "selectpoint2"  resultType = "int" parameterType ="String">
+		select point from member where mid= #{mid}
+	</select>
+	
+	 <!--  포인트충전-->
+ 	<update id="pointcharge"  parameterType="be.good.model.MemberDTO">
+		update member set  point =#{point}
+		where mno=#{mno}
+	</update>
+ 	
+</mapper>
+

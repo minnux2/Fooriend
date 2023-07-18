@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="be.good.model.BoardDAO">
+
+	<!-- 글가져오기 list -->
+	<select id="getBoardList" parameterType="hashmap" resultType="be.good.model.BoardDTO">
+		select * from
+		(select A.*,ROWNUM r from
+		(select * from questionboard q inner join Member m on q.qmno = m.Mno order by
+		q.qno desc) A
+		)
+		where r >= #{start} and r &lt;= #{end}
+	</select>
+
+
+	<!-- 글쓰기 write -->
+	<insert id="insertBoard" parameterType="be.good.model.BoardDTO">
+		insert into questionboard(qno, qmno, qtitle, qcontent, datecreated, qcount) values(qnoseq.NEXTVAL, #{mno}, #{qtitle}, #{qcontent}, sysdate, 0)
+	</insert>
+
+
+	<!-- 댓글 달기 -->
+	<insert id="insertReply" parameterType="be.good.model.BoardDTO">
+		insert into Reply (rno, rqno, rmno, rcontent, replydate) values(rnoseq.nextval, #{qno}, #{mno}, #{rcontent}, sysdate)
+	</insert>
+
+	<!-- 글 하나 가져오기 -->
+	<select id="getBoard" parameterType="Integer" resultType="be.good.model.BoardDTO">
+		select * from questionboard q, member m where q.qno = #{qno} and m.mno= q.qmno
+	</select>
+
+	<update id="updateBoard" parameterType="be.good.model.BoardDTO">
+		update questionboard set qtitle= #{qtitle}, qcontent=#{qcontent} where qno=#{qno}
+	</update>
+
+	<!-- 글 삭제 -->
+	<delete id="deleteBoard" parameterType="be.good.model.BoardDTO">
+		delete from questionboard where qno = #{qno}
+	</delete>
+
+	<!-- 댓글 삭제 -->
+	<delete id="deleteReply" parameterType="be.good.model.BoardDTO">
+		delete from reply where rno = #{rno} and rmno = #{mno}
+	</delete>
+
+	<!-- 조회수 카운트 -->
+	<update id="updateHit" parameterType="Integer">
+		update questionboard set qcount = qcount +1 where qno = #{qno}
+	</update>
+
+	<select id="getBoardCount" resultType="Integer">
+		select count(*) from questionboard
+	</select>
+
+	<select id="getReplyList" parameterType="Integer" resultType="be.good.model.BoardDTO">
+		select * from reply r inner join member m on r.rmno= m.mno where r.rqno = #{qno}
+	</select>
+</mapper>

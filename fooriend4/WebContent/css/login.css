@@ -1,0 +1,320 @@
+@charset "UTF-8";
+
+/*!
+ * Bootstrap v4.3.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+HTML CSSResult Skip Results Iframe
+EDIT ON /* reset */  
+ul {
+	margin: 0;
+	padding: 0;
+}
+
+/* design */
+.selectbox {
+	margin: 150px auto;
+}
+
+.imgg {
+	width: 25%;
+}
+
+.pl {
+	width: 200px;
+	border: 1px solid #C4C4C4;
+	box-sizing: border-box;
+	border-radius: 10px;
+	padding: 12px 13px;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	background: url(./img/Polygon_up.png) 93% no-repeat; /*화살표 이미지 삽입*/
+	appearance: none;
+	text-align: left;
+}
+
+.pl:focus {
+	border: 1px solid #9B51E0;
+	box-sizing: border-box;
+	border-radius: 10px;
+	outline: 3px solid #F8E4FF;
+	border-radius: 10px;
+}
+
+.listbox {
+	width: 200px;
+	list-style: none;
+	background: #FFFFFF;
+	border: 1px solid #C4C4C4;
+	box-sizing: border-box;
+	box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+	border-radius: 10px;
+	margin-top: 9px;
+}
+
+.list {
+	border: none;
+	background-color: #FFFFFF;
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 16px;
+	padding: 7px 10px;
+	margin: 5px 7px;
+	box-sizing: border-box;
+}
+
+.list:focus {
+	background: #F8E4FF;
+	width: 184px;
+	border-radius: 8px;
+	box-sizing: border-box;
+	text-align: left;
+}
+
+.col-md-8 col-lg-6 {
+	
+}
+
+.main-content {
+	flex: 1;
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+footer {
+	height: 150px;
+	background-color: black;
+	color: white;
+}
+
+footer a {
+	color: white;
+}
+
+#footer_box {
+	width: 1130px;
+	height: 150px;
+	margin: 0 auto;
+}
+
+#footer_logo {
+	float: left;
+	font-size: 45px;
+	margin-top: 40px;
+}
+
+#footer_box #address {
+	float: right;
+	margin-top: 40px;
+}
+
+body {
+	font-family: "Lato", Arial, sans-serif;
+	font-size: 16px;
+	line-height: 1.8;
+	font-weight: normal;
+	color: white;
+	position: relative;
+	z-index: 0;
+	padding: 0;
+}
+
+body:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	content: '';
+	background: white;
+	opacity: .3;
+	z-index: -1;
+}
+
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
+	line-height: 1.5;
+	font-weight: 400;
+	font-family: "Lato", Arial, sans-serif;
+	color: #000;
+}
+
+.ftco-section {
+	padding: 7em 0;
+}
+
+.img {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.login-wrap {
+	position: relative;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.login-wrap h3 {
+	font-weight: 300;
+	color: #fff;
+}
+
+.login-wrap .social {
+	width: 100%;
+}
+
+.login-wrap .social a {
+	width: 100%;
+	display: block;
+	border: 1px solid #7c7c7c;
+	color: #000;
+	background:
+}
+
+.login-wrap .social a:hover {
+	background: #000;
+	color: #fff;
+	border-color: #000;
+}
+
+.form-group {
+	position: relative;
+}
+
+.field-icon {
+	position: absolute;
+	top: 50%;
+	right: 15px;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.form-control {
+	background: #7c7c7c;
+	border: none;
+	height: 50px;
+	color: #7c7c7c;
+	border: 1px solid #7c7c7c;
+	background: rgba(255, 255, 255, 0.3);
+	border-radius: 40px;
+	padding-left: 20px;
+	padding-right: 20px;
+	-webkit-transition: 0.3s;
+	-o-transition: 0.3s;
+	transition: 0.3s;
+}
+
+@media ( prefers-reduced-motion : reduce) {
+	.form-control {
+		-webkit-transition: none;
+		-o-transition: none;
+		transition: none;
+	}
+}
+
+.form-control::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	color: #7c7c7c
+}
+
+.form-control::-moz-placeholder {
+	/* Firefox 19+ */
+	color: #7c7c7c
+}
+
+.form-control:-ms-input-placeholder {
+	/* IE 10+ */
+	color: #7c7c7c
+}
+
+.form-control:-moz-placeholder {
+	/* Firefox 18- */
+	color: #7c7c7c
+}
+
+.form-control:hover, .form-control:focus {
+	background: #d2d2d2;
+	outline: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	border-color: #7c7c7c
+}
+
+.form-control:focus {
+	border-color: #7c7c7c
+}
+
+.btn {
+	cursor: pointer;
+	border-radius: 40px;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	font-size: 15px;
+	text-transform: uppercase;
+}
+
+.btn:hover, .btn:active, .btn:focus {
+	outline: none;
+}
+
+.btn.btn-primary {
+	background: #fbceb5 !important;
+	border: 1px solid #fbceb5 !important;
+	color: #000 !important;
+}
+
+.btn.btn-primary:hover {
+	border: 1px solid #fbceb5;
+	background: transparent;
+	color: #fbceb5;
+}
+
+.btn.btn-primary.btn-outline-primary {
+	border: 1px solid #fbceb5;
+	background: transparent;
+	color: #fbceb5;
+}
+
+.btn.btn-primary.btn-outline-primary:hover {
+	border: 1px solid transparent;
+	background: #fbceb5;
+	color: #fff;
+}
+
+#mainPage-inner {
+	text-align: center;
+}
+
+button.btn2 {
+	margin-top: -150px;
+	position: absolute;
+	margin-left: -150px;
+	font-size: 28px;
+	padding: 20px 40px;
+	border-radius: 7px;
+	background-color: #ffb77b;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+}
+
+button.btn2:active {
+	font-size: 26px;
+}

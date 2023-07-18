@@ -1,0 +1,234 @@
+drop table pay;
+drop table subscribe;
+drop table reply;
+drop table questionboard;
+drop table orderhistory;
+drop table member;
+drop table restaurant;
+drop table notice;
+select * from restaurant;
+
+
+-- 
+create table member( 
+Mno number constraint mnopk primary key not null,
+Mname varchar2(20) not null,
+Maddress varchar2(500) not null,
+Memail varchar2(100) not null,
+Mid varchar2(30) not null,
+Mpassword varchar2(20) not null,
+Mphone varchar2(200) not null,
+Mcardnumber number ,
+Mcardname varchar2(20) ,
+MAllergypeanut number not null,
+MAllergypeach number not null,
+MAllergydairy number not null,
+MAllergyseafood number not null,
+MAllergyshellfish number not null,
+point number 
+);
+
+insert into member values (1, '최신형', '수원', 'tls@naver', 'tlsgud', '0803', '01022663644', 1234567812345678, '신한', 0, 0, 0, 0, 0, 10000);
+select * from member;
+
+create table restaurant(
+Rno number constraint Rnopk primary key not null,
+category varchar2(20) not null,
+Rname varchar2(20) not null,
+foodname varchar2(20) not null,
+foodprice number not null,
+location varchar2(20) not null,
+foodAllergys varchar2(2000) not null
+);
+--외래키 확인
+
+create table questionboard(
+Qno number constraint Qnopk primary key not null,
+Qmno number CONSTRAINT QMNOfk REFERENCES member(MNO)ON DELETE CASCADE not null,
+Qtitle varchar(30) not null,
+Qcontent varchar(500) not null,
+Qcount number not null,
+datecreated date default sysdate
+
+);
+
+create sequence mnoseq;
+drop sequence mnoseq;
+create sequence Qnoseq;
+drop sequence Qnoseq;
+create sequence Rnoseq;
+drop sequence Rnoseq;
+create sequence subnoseq;
+drop sequence subnoseq;
+insert into member values (mnoseq.nextval, '신형', '수원', 'tlsh@naver', 'tlsgu', '08030', '01022663644', 1234567812345678, '신한', 0, 0, 0, 0, 0, 10000);
+
+create table notice(
+Nno number not null,
+Ntitle varchar2(30) not NULL,
+Ncontent varchar(500) not null
+);
+
+create table orderhistory(
+Ono number constraint Onopk primary key not null,
+Orno number constraint Ornofk references restaurant(rno)ON DELETE CASCADE not null,
+Omno number constraint Omnofk references member(mno)ON DELETE CASCADE not null,
+Odate date not null
+);
+
+create table subscribe(
+subno number constraint subnopk primary key not null,
+submno number constraint submnofk references member(MNO)ON DELETE CASCADE not null,
+subcate1 varchar2(10),
+subcate2 varchar2(10),
+subcate3 varchar2(10),
+subcate4 varchar2(10),
+subcate5 varchar2(10),
+subcate6 varchar2(10),
+subcate7 varchar2(10),
+subcate8 varchar2(10),
+subscribing varchar2(10) not null,
+subloc varchar2(10) not null,
+substart date not null,
+subend date not null,
+diliverytime date not null,
+subday varchar2(20) not null
+);
+
+create table pay(
+pno number constraint pnopk primary key not null,
+pmno number constraint pmnofk references member(MNO)ON DELETE CASCADE not null,
+prno number constraint prnofk references restaurant(RNO) ON DELETE CASCADE not null,
+psubno number constraint psubnofk references subscribe(subno)
+);
+
+create table reply(
+    Rno number  CONSTRAINT Mno_pk primary key not null,
+    Rqno number CONSTRAINT Rqno_fk REFERENCES questionboard(QNO)ON DELETE CASCADE not null,
+    Rmno number CONSTRAINT Rmno_fk REFERENCES member(MNO)not null ON DELETE CASCADE not null,
+    Rcontent varchar2(500) not null,
+    Replydate date not null
+);
+
+create or replace procedure order_history_proc 
+    is
+    nnum number ; 
+    nnum2 number;
+    vnnum number;
+    vpoint number;
+    vsubstart date;
+    vsubend date;
+    vrno number;
+    vcategory varchar2(20);
+    vrname varchar2(40);
+    vfoodname varchar2(40);
+    vfoodprice number;
+    vlocation varchar2(200);
+    vlocdetail varchar2(2000);
+    vfoodallergys varchar2(40);
+    vmallergy number;
+    vmno number;
+    vsubday varchar2(50);
+  vday varchar2(50);
+  
+begin
+  select to_char(sysdate,'dy') into vday  from dual;
+DBMS_OUTPUT.PUT_LINE(vday);
+select min(subno) into nnum from subscribe;
+select max(subno) into nnum2 from subscribe;
+
+loop
+DBMS_OUTPUT.PUT_LINE(nnum);
+select Max(subno) into vnnum from subscribe where subno =nnum;
+DBMS_OUTPUT.PUT_LINE('여기');
+if vnnum is not null
+then
+    select substart into vsubstart from subscribe where subno= nnum;
+    select subend into vsubend from subscribe where subno= nnum;
+    select subday into vsubday from subscribe where subno= nnum;
+    DBMS_OUTPUT.PUT_LINE(vsubday);
+    if sysdate>= vsubstart AND sysdate <= vsubend AND vsubday like '%'||vday||'%'
+    then
+select mallergy into vmallergy from member where mno= (select submno from subscribe where subno =nnum);
+
+case vmallergy 
+when 0 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) 
+    order by dbms_random.value) where rownum <=1;
+    
+when 1 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('땅콩')
+    order by dbms_random.value) where rownum <=1;
+    
+ when 2 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('갑각류')
+    order by dbms_random.value) where rownum <=1;
+    
+    when 4 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('유제품')
+    order by dbms_random.value) where rownum <=1;
+    
+    when 3 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('땅콩') and foodallergys not in ('갑각류')
+    order by dbms_random.value) where rownum <=1;
+    
+    when 5 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('땅콩') and foodallergys not in ('유제품')
+    order by dbms_random.value) where rownum <=1;
+    
+    when 6 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('갑각류') and foodallergys not in ('유제품')
+    order by dbms_random.value) where rownum <=1;
+    
+    when 7 then
+SELECT RNO, CATEGORY, RNAME, FOODNAME, FOODPRICE, LOCATION, LOCDETAIL, FOODALLERGYS into vrno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys from (select * from restaurant 
+    where location = (select subloc from subscribe where subno = nnum) and category = (select subcate from subscribe where subno = nnum) and foodallergys not in ('땅콩') and foodallergys not in ('갑각류') and foodallergys not in ('유제품')
+    order by dbms_random.value) where rownum <=1; 
+    
+    end case;
+
+ select submno into vmno from subscribe where subno = nnum;
+    select point into vpoint from member where mno=vmno;
+    vpoint := vpoint- vfoodprice;
+    update  member set point = vpoint where mno=vmno;
+    
+    
+    insert into orderhistory values(onoseq.nextval, vrno, vmno, vcategory, vrname, vfoodname , vfoodprice, vlocation, vlocdetail, vfoodallergys, sysdate);
+    commit;
+ end if;
+ end if;
+    nnum:= nnum+1;
+ exit when nnum> nnum2;
+end loop;
+--exception
+--when no_data_found then vnnum :=0;
+end;
+
+
+
+
+DECLARE
+  X NUMBER;
+BEGIN
+  SYS.DBMS_JOB.SUBMIT
+    (  JOB       => X 
+     , WHAT      => 'order_history_proc;'
+     , NEXT_DATE =>  SYSDATE       
+     , INTERVAL  => 'SYSDATE + 1'     --하루 간격
+     , NO_PARSE  => TRUE
+    );
+END;
+
+EXECUTE DBMS_JOB.RUN(9);
+
+EXECUTE dbms_job.REMOVE(8);
+select * from user_jobs;
+
+
+EXECUTE dbms_job.broken(9, FALSE);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="subMapper">
+	<!-- 모든정보 저장 -->
+	<insert id="insertSub" parameterType="be.good.model.SubDAO">
+		insert into subscribe values (subnoseq.NEXTVAL, #{submno}, #{subcate},#{subscribing},
+		#{subloc}, #{sublocdetail}, #{substart}, #{subend}, #{deliverytime},
+		#{subday})
+	</insert>
+
+	<!-- 클릭한 체크박스 요일 저장 -->
+	<insert id="insertDay" parameterType="be.good.model.SubDAO">
+		insert into subscribe values (#{subday})
+	</insert>
+
+	<!-- 구독내역조회 -->
+	<select parameterType="String" id="sublist" resultType="be.good.model.SubDTO">
+		select * from subscribe where submno = (select mno from member where mid = #{mid})
+	</select>
+</mapper>

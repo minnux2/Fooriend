@@ -1,0 +1,222 @@
+@charset "UTF-8";
+
+
+
+body {
+	font-family: Geogia;
+}
+
+li {
+	list-style: none;
+}
+
+#subline {
+	background-color: gray;
+	width: 93%;
+	margin-right: 60%;
+	margin-top: -5px;
+	height: 1px;
+	border: 0;
+}
+
+li {
+	float: left;
+}
+
+#aside {
+	float: left;
+	width: 300px;
+	height: 700px;
+	background: pink;
+	width: 33%;
+	text-align: center;
+	margin: auto;
+}
+
+#bdwrite {
+	float: right;
+	margin-right: 20%;
+}
+
+#asideinnder {
+	margin-top: -15px;
+	margin-left: 250px;
+	text-align: center;
+}
+
+#contents {
+	float: left;
+	background: skyblue;
+	width: 67%;
+	height: 100%;
+	margin-top: 20px;
+}
+
+.box {
+	width: 1130px;
+	float: left;
+	margin: auto;
+}
+
+.aside {
+	float: left;
+	width: 33%;
+	text-align: center;
+}
+
+.b_list {
+	padding-bottom: 30px;
+	border-bottom: 1px solid #e6e6e6;
+	border-collapse: collapse;
+}
+
+.r_info {
+	border-bottom: 1px solid #EAEAEA;
+}
+
+.container {
+	margin-left: 300px;
+}
+
+.list {
+	float: left;
+	width: 67%;
+	height: 750px;
+}
+
+.b_btn {
+	text-align: center;
+	width: 60px;
+	height: 25px;
+	margin-left: 630px;
+	border: 1.5px solid rgb(141, 141, 141);
+	background-color: white;
+	border-radius: 0.5rem;
+	font-size: small;
+}
+
+.b_btn:hover {
+	cursor: pointer;
+	color: white;
+	background-color: rgb(141, 141, 141);
+}
+
+.b_btn:focus {
+	outline: none;
+}
+
+.btn_lo {
+	margin-top: -5px;
+}
+
+#paging {
+	margin-top: 90px;
+	margin-left: 120px;
+}
+
+.page_wrap {
+	text-align: center;
+	font-size: 0;
+}
+
+.page_nation {
+	display: inline-block;
+}
+
+.page_nation .none {
+	display: none;
+}
+
+.page_nation a {
+	display: block;
+	margin: 0 3px;
+	float: left;
+	border: 1px solid #e6e6e6;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	text-align: center;
+	background-color: #fff;
+	font-size: 13px;
+	color: #999999;
+	text-decoration: none;
+}
+
+.page_nation a:focus {
+	color: #000;
+	background-color: #fafafa;
+	border-color: #ccc;
+}
+
+@charset "UTF-8";
+
+details {
+	border-bottom: 1px solid #EAEAEA;
+	margin-bottom: 10px;
+	padding: 10 20px;
+}
+
+details p {
+	border: 1px solid #EAEAEA;
+	padding: 10px 15px;
+	background-color: #eaeaea;
+	height: 80px;
+	width: 600px;
+}
+
+details summary {
+	height: 35px;
+	line-height: 35px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+body a {
+	text-decoration : none;
+	color: black;
+	font-family: font-family : "궁서체";
+}
+body a:hover { 
+	text-decoration:none !important ;
+	color: gray;
+	}
+.main-content {
+	flex: 1;
+}
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+}
+
+footer {
+	height: 150px;
+	background-color: black;
+	color: white;
+}
+
+footer a {
+	color: white;
+}
+
+#footer_box {
+	width: 1130px;
+	height: 150px;
+	margin: 0 auto;
+}
+
+#footer_logo {
+	float: left;
+	font-size: 45px;
+	margin-top: 40px;
+}
+
+#footer_box #address {
+	float: right;
+	margin-top: 40px;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="resMapper">
+
+	<select id = "orderhistory" resultType = "be.good.model.OrderDTO" parameterType="String">
+		select * from orderhistory where omno = (select mno from member where mid = #{mid})
+	</select>
+	
+	<select id = "ordertoday" resultType = "be.good.model.OrderDTO" parameterType="String">
+		select * from orderhistory where omno = (select mno from member where mid = #{mid}) and odate like sysdate
+	</select>
+	
+</mapper>
